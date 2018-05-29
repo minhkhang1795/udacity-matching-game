@@ -69,11 +69,12 @@ h1 {
     transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
-}
-
-.deck .card.show {
     font-size: 33px;
 }
+
+/*.deck .card.show {*/
+/**/
+/*}*/
 
 .deck .card.match {
     cursor: default;
@@ -92,7 +93,6 @@ h1 {
 }
 
 .score-panel .stars {
-    margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;

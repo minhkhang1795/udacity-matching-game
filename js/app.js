@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-
+let deck = document.querySelector(".deck");
+let cards = document.querySelectorAll(".card");
 
 /*
  * Display the cards on the page
@@ -9,20 +10,9 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
+// Shuffle function from https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
+for (let i = deck.children.length; i >= 0; i--) {
+    deck.appendChild(deck.children[Math.random() * i | 0]);
 }
 
 
@@ -36,3 +26,5 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
