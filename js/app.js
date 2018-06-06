@@ -4,11 +4,15 @@
 let deck = document.getElementById("deck");
 let cards = document.getElementsByClassName("card");
 let moveElement = document.getElementById("moves");
+let vMoveElement = document.getElementById("v-moves");
+let starsList = document.getElementsByClassName("stars");
 let restartBtn = document.getElementById("restart");
+let victoryModal = document.getElementById('victoryModal');
+let victoryRestartBtn = document.getElementById("victoryClose");
 let openCards = [];
 let moveCount = 0;
 let matchCount = 0;
-let State = {
+const State = {
     OPEN: "open",
     MATCH: "match",
 };
@@ -22,7 +26,7 @@ let State = {
  *
  * Shuffle function from https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
  */
-// shuffleCards();
+shuffleCards();
 
 
 /**
@@ -47,6 +51,20 @@ for (let card of cards)
  */
 restartBtn.addEventListener("click", restartGame);
 
+/**
+ * Set up victory modal's event listeners
+ */
+// When the user clicks on the button, close the modal
+victoryRestartBtn.onclick = function () {
+    restartGame();
+    victoryModal.style.display = "none";
+};
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target === victoryModal)
+        victoryModal.style.display = "none";
+};
+
 
 /**
  * Main function: when a card is clicked
@@ -62,7 +80,7 @@ function onCardClicked(event) {
     if (openCards.length === 1)
         toggleCardSymbol(card, State.OPEN);
     else
-        toggleCardSymbol(card, State.OPEN).done(increaseMoves, cardPairHandler);
+        toggleCardSymbol(card, State.OPEN).done(cardPairHandler, updateScore);
 
     /**
      * Handle event when two cards are clicked open
@@ -74,9 +92,8 @@ function onCardClicked(event) {
         toggleCardSymbol(card2, state);
         if (state === State.MATCH) {
             matchCount++;
-            if (matchCount === 8) {
-                console.log("win");
-            }
+            if (matchCount === 8)
+                showVictoryModal();
         }
         openCards = [];
     }
@@ -121,7 +138,9 @@ function restartGame() {
     function resetUI() {
         for (let card of cards)
             card.className = "card";
+        setStars(5);
         moveElement.innerText = "0 moves";
+        vMoveElement.innerText = "0";
     }
 
     let r = $.Deferred();
@@ -131,7 +150,7 @@ function restartGame() {
 
     setTimeout(function () {
         r.resolve();
-    }, 800);
+    }, 150);
 
     r.done(shuffleCards);
 }
@@ -149,7 +168,29 @@ function shuffleCards() {
 /**
  * Call this function to increase move count, update both the variables and the UI
  */
-function increaseMoves() {
+function updateScore() {
+    // First update moves
     moveCount++;
     moveElement.innerHTML = moveCount + (moveCount === 1 ? " move" : " moves");
+    vMoveElement.innerHTML = moveCount;
+
+    // Then update stars
+    let accuracy = (matchCount + 5) / moveCount * 100; // The first 5 moves doesn't hurt
+    let numStars = Math.ceil((accuracy > 100 ? 100 : accuracy) / 20);
+    setStars(numStars);
+}
+
+function setStars(numStars) {
+    for (let stars of starsList) {
+        for (let i = stars.children.length - 1; i >= 0; i--) {
+            stars.children[i].firstElementChild.className = i < numStars ? "fas fa-star" : "far fa-star";
+        }
+    }
+}
+
+/**
+ * Function to show a victory modal
+ */
+function showVictoryModal() {
+    victoryModal.style.display = "block";
 }
