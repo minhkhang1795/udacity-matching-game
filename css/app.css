@@ -134,7 +134,7 @@ h1 {
     padding: 20px 20px 20px 20px;
     border: .2rem solid transparent;
     border-radius: .25rem;
-    width: 30%; /* Could be more or less, depending on screen size */
+    width: 100%; /* Could be more or less, depending on screen size */
     max-width: 340px;
 }
 
@@ -175,4 +175,73 @@ h1 {
 .button:hover {
     background-color: rgba(2, 179, 228, 0.92);
     box-shadow: 4px 5px 10px 0 rgba(46, 61, 73, .15);
+}
+
+/* Shake animation: https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
+.shake {
+    -o-animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+    -moz-animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+    -webkit-animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    background: #f04546 !important; /* Udacity's red color */
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(4px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-8px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(8px, 0, 0);
+    }
+}
+
+/* RubberBand animation: https://github.com/daneden/animate.css/blob/master/source/attention_seekers/rubberBand.css */
+.rubberBand {
+    -o-animation: rubberBand 0.5s both;
+    -moz-animation: rubberBand 0.5s both;
+    -webkit-animation: rubberBand 0.5s both;
+    animation: rubberBand 0.5s both;
+    background: #02ccba !important;
+}
+
+@keyframes rubberBand {
+    from {
+        transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+        transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+        transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+        transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+        transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+        transform: scale3d(1.05, 0.95, 1);
+    }
+
+    to {
+        transform: scale3d(1, 1, 1);
+    }
 }

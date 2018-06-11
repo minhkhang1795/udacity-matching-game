@@ -26,7 +26,7 @@ const State = {
  *
  * Shuffle function from https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
  */
-shuffleCards();
+// shuffleCards();
 
 
 /**
@@ -88,71 +88,101 @@ function onCardClicked(event) {
     function cardPairHandler() {
         let [card1, card2] = openCards;
         let state = card1.firstElementChild.className === card2.firstElementChild.className ? State.MATCH : State.OPEN;
-        toggleCardSymbol(card1, state);
-        toggleCardSymbol(card2, state);
-        if (state === State.MATCH) {
-            matchCount++;
-            if (matchCount === 8)
-                showVictoryModal();
-        }
-        openCards = [];
+        let animationStyle = state === State.MATCH ? "rubberBand" : "shake";
+        animateCards(openCards, animationStyle).done(function () {
+            for (let card of cards)
+                card.classList.remove(animationStyle);
+            toggleCardSymbol(card1, state); // Either close or keep cards open
+            toggleCardSymbol(card2, state);
+            if (state === State.MATCH) {
+                matchCount++;
+                if (matchCount === 8)
+                    showVictoryModal();
+            }
+            openCards = [];
+        });
     }
 }
 
 
 /**
- * Function to flip a card with animation
- * @param card
- * @param className: either MATCH or OPEN
+ * Function to animate a card, either shaking for unmatched or rubberBand for matched
+ * @param cards
+ * @param style: either shaking or rubberBand
  * @returns {*}
  *
  * Wait till a function finished with jQuery:
  * https://stackoverflow.com/questions/12116505/wait-till-a-function-with-animations-is-finished-until-running-another-function
  */
-function toggleCardSymbol(card, className) {
+function animateCards(cards, style) {
     let r = $.Deferred();
 
     // do whatever you want (e.g. ajax/animations other asyc tasks)
-    card.classList.toggle(className);
+    for (let card of cards)
+        card.classList.add(style);
 
     setTimeout(function () {
         // and call `resolve` on the deferred object, once you're done
         r.resolve();
-    }, 800);
+    }, 500);
+
+    return r;
+}
+
+/**
+ * Function to flip a card with animations
+ * @param card
+ * @param state: either MATCH or OPEN
+ * @returns {*}
+ *
+ * Wait till a function finished with jQuery:
+ * https://stackoverflow.com/questions/12116505/wait-till-a-function-with-animations-is-finished-until-running-another-function
+ */
+function toggleCardSymbol(card, state) {
+    let r = $.Deferred();
+
+    // do whatever you want (e.g. ajax/animations other asyc tasks)
+    card.classList.toggle(state);
+
+    setTimeout(function () {
+        // and call `resolve` on the deferred object, once you're done
+        r.resolve();
+    }, 500);
 
     // return the deferred object
     return r;
 }
 
-
 /**
  * Call this function to restart the game
  */
 function restartGame() {
-    function resetVariables() {
-        openCards = [];
-        moveCount = 0;
-        matchCount = 0;
+    if (openCards.length <= 1) {
+        function resetVariables() {
+            openCards = [];
+            moveCount = 0;
+            matchCount = 0;
+        }
+
+        function resetUI() {
+            for (let card of cards)
+                card.className = "card";
+            setStars(5);
+            moveElement.innerText = "0 moves";
+            vMoveElement.innerText = "0";
+        }
+
+        let r = $.Deferred();
+
+        resetVariables();
+        resetUI();
+
+        setTimeout(function () {
+            r.resolve();
+        }, 150);
+
+        r.done(shuffleCards);
     }
-
-    function resetUI() {
-        for (let card of cards)
-            card.className = "card";
-        setStars(5);
-        moveElement.innerText = "0 moves";
-        vMoveElement.innerText = "0";
-    }
-
-    let r = $.Deferred();
-
-    resetVariables();
-    resetUI();
-
-    setTimeout(function () {
-        r.resolve();
-    }, 150);
-
-    r.done(shuffleCards);
 }
 
 
