@@ -26,7 +26,7 @@ const State = {
  *
  * Shuffle function from https://stackoverflow.com/questions/7070054/javascript-shuffle-html-list-element-order
  */
-// shuffleCards();
+shuffleCards();
 
 
 /**
@@ -51,6 +51,7 @@ for (let card of cards)
  */
 restartBtn.addEventListener("click", restartGame);
 
+
 /**
  * Set up victory modal's event listeners
  */
@@ -58,11 +59,6 @@ restartBtn.addEventListener("click", restartGame);
 victoryRestartBtn.onclick = function () {
     restartGame();
     victoryModal.style.display = "none";
-};
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target === victoryModal)
-        victoryModal.style.display = "none";
 };
 
 
@@ -96,8 +92,7 @@ function onCardClicked(event) {
             toggleCardSymbol(card2, state);
             if (state === State.MATCH) {
                 matchCount++;
-                if (matchCount === 8)
-                    showVictoryModal();
+                checkVictory();
             }
             openCards = [];
         });
@@ -221,6 +216,7 @@ function setStars(numStars) {
 /**
  * Function to show a victory modal
  */
-function showVictoryModal() {
-    victoryModal.style.display = "block";
+function checkVictory() {
+    if (matchCount === 8)
+        victoryModal.style.display = "block";
 }
