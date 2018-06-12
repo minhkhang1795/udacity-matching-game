@@ -44,7 +44,7 @@
                           stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "></polyline>
             </svg>
             <div class="pulse">
-                <h2>Congratulations! You Won!</h2>
+                <h2>Congratulations!</h2>
                 <ul class="stars">
                     <li><i class="fas fa-star"></i></li>
                     <li><i class="fas fa-star"></i></li>
@@ -53,7 +53,7 @@
                     <li><i class="fas fa-star"></i></li>
                 </ul>
 
-                <p>Total moves: <span id="v-moves">0</span></p>
+                <p id="v-moves">If you're getting this message, you're cheating!</p>
 
                 <div id="victoryClose" class="button"><p>Play again</p></div>
             </div>
@@ -75,8 +75,9 @@
 
         <span id="moves">0 moves</span>
 
-        <div id="restart">
-            <i class="fa fa-undo"></i> Restart
+        <div class="right-panel">
+            <span id="restart"><i class="fa fa-undo"></i> Restart</span>
+            <i class="far fa-clock"></i> <span id="clock">0 seconds</span>
         </div>
     </div>
 

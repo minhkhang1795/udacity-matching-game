@@ -1,17 +1,20 @@
 /**
  * Create a list that holds all of your cards
  */
-let deck = document.getElementById("deck");
-let cards = document.getElementsByClassName("card");
-let moveElement = document.getElementById("moves");
-let vMoveElement = document.getElementById("v-moves");
-let starsList = document.getElementsByClassName("stars");
-let restartBtn = document.getElementById("restart");
-let victoryModal = document.getElementById('victoryModal');
-let victoryRestartBtn = document.getElementById("victoryClose");
-let openCards = [];
-let moveCount = 0;
-let matchCount = 0;
+let deck = document.getElementById("deck"),
+    cards = document.getElementsByClassName("card"),
+    moveElement = document.getElementById("moves"),
+    vMoveElement = document.getElementById("v-moves"),
+    starsList = document.getElementsByClassName("stars"),
+    restartBtn = document.getElementById("restart"),
+    victoryModal = document.getElementById('victoryModal'),
+    victoryRestartBtn = document.getElementById("victoryClose"),
+    clock = document.getElementById("clock"),
+    openCards = [],
+    moveCount = 0,
+    matchCount = 0,
+    interval = null,
+    timeElapsed = 0;
 const State = {
     OPEN: "open",
     MATCH: "match",
@@ -67,6 +70,10 @@ victoryRestartBtn.onclick = function () {
  * @param event: clicked event on cards
  */
 function onCardClicked(event) {
+    // Set up timer on the first card clicked
+    if (interval === null)
+        interval = setInterval(updateClockUI, 1000);
+
     let card = event.target.nodeName === "I" ? event.target.parentNode : event.target;
 
     if (openCards.length === 2 || card.classList.contains(State.MATCH) || card.classList.contains(State.OPEN))
@@ -124,6 +131,7 @@ function animateCards(cards, style) {
     return r;
 }
 
+
 /**
  * Function to flip a card with animations
  * @param card
@@ -148,6 +156,7 @@ function toggleCardSymbol(card, state) {
     return r;
 }
 
+
 /**
  * Call this function to restart the game
  */
@@ -157,6 +166,9 @@ function restartGame() {
             openCards = [];
             moveCount = 0;
             matchCount = 0;
+            timeElapsed = 0;
+            clearInterval(interval);
+            interval = null;
         }
 
         function resetUI() {
@@ -164,7 +176,8 @@ function restartGame() {
                 card.className = "card";
             setStars(5);
             moveElement.innerText = "0 moves";
-            vMoveElement.innerText = "0";
+            vMoveElement.innerText = "If you're getting this message, you're cheating!";
+            clock.innerHTML = "0 seconds";
         }
 
         let r = $.Deferred();
@@ -197,7 +210,6 @@ function updateScore() {
     // First update moves
     moveCount++;
     moveElement.innerHTML = moveCount + (moveCount === 1 ? " move" : " moves");
-    vMoveElement.innerHTML = moveCount;
 
     // Then update stars
     let accuracy = (matchCount + 5) / moveCount * 100; // The first 5 moves doesn't hurt
@@ -205,6 +217,11 @@ function updateScore() {
     setStars(numStars);
 }
 
+
+/**
+ * Change the UI according to the number of stars
+ * @param numStars
+ */
 function setStars(numStars) {
     for (let stars of starsList) {
         for (let i = stars.children.length - 1; i >= 0; i--) {
@@ -213,10 +230,33 @@ function setStars(numStars) {
     }
 }
 
+
 /**
  * Function to show a victory modal
  */
 function checkVictory() {
-    if (matchCount === 8)
-        victoryModal.style.display = "block";
+    if (matchCount === 8) {
+        // Double check to make sure you don't cheat!
+        let count = 0;
+        for (let card of cards) {
+            if (card.classList.contains(State.MATCH)) {
+                count++;
+            }
+        }
+        if (count === 16) {
+            victoryModal.style.display = "block";
+            clearInterval(interval);
+            interval = null;
+            vMoveElement.innerText = "You won with " + moveCount + " moves in " + timeElapsed + " seconds.";
+        }
+    }
 }
+
+
+/**
+ * Update time elapsed variable and the clock UI
+ */
+function updateClockUI() {
+    clock.innerHTML = timeElapsed++ === 0 ? "1 second" : timeElapsed + " seconds";
+}
+

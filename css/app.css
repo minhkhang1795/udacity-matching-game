@@ -92,7 +92,7 @@ footer {
 
 .score-panel {
     text-align: left;
-    width: 345px;
+    width: 420px;
     margin-bottom: 10px;
 }
 
@@ -107,9 +107,13 @@ footer {
     display: inline-block;
 }
 
-.score-panel #restart {
+.score-panel .right-panel {
     float: right;
+}
+
+.score-panel #restart {
     cursor: pointer;
+    margin-right: 0.5rem;
 }
 
 /*
