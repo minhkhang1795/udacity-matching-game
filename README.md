@@ -14,7 +14,7 @@ Each turn:
 
 The game ends once all cards have been correctly matched.
 
-Live Demo on <a href="https://minhkhang1795.github.io/udacity-memory-game/" target="_blank">Github Page</a>.
+Live Demo on [Github Page](https://minhkhang1795.github.io/udacity-memory-game/)
 
 ## Credits
 * Project Template:
