@@ -21,9 +21,7 @@ body {
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
     flex-direction: column;
 }
 
@@ -39,13 +37,88 @@ h1 {
 footer {
     text-align: center;
 }
+
+@media screen and (max-width: 479px) {
+    .score-panel {
+        text-align: center !important;
+    }
+
+    .score-panel .right-panel {
+        margin-top: 10px;
+        float: none !important;
+    }
+}
+
+@media screen and (max-width: 349px) {
+    #deck {
+        padding: 16px !important;
+    }
+
+    #deck .card {
+        height: 10vw;
+        width: 10vw;
+        min-width: 55px;
+        min-height: 55px;
+    }
+}
+
+@media screen and (min-width: 350px) and (max-width: 500px) {
+    #deck {
+        padding: 24px !important;
+    }
+
+    #deck .card {
+        height: 15vw;
+        width: 15vw;
+        min-width: 60px;
+        min-height: 60px;
+    }
+}
+
+@media screen and (min-width: 499px) and (max-width: 649px) {
+    #deck .card {
+        height: 15vw;
+        width: 15vw;
+        min-width: 80px;
+        min-height: 80px;
+    }
+}
+
+@media screen and (min-width: 650px) and (max-width: 799px) {
+    #deck .card {
+        height: 16vw;
+        width: 16vw;
+        min-width: 100px;
+        min-height: 100px;
+    }
+}
+
+@media screen and (max-width: 799px) {
+    #deck {
+        width: 80vw;
+        height: 80vw;
+        min-width: 300px;
+        min-height: 320px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    #deck {
+        width: 660px;
+        min-height: 680px;
+    }
+
+    #deck .card {
+        height: 125px;
+        width: 125px;
+    }
+}
+
 /*
  * Styles for the deck of cards
  */
 
 #deck {
-    width: 660px;
-    min-height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -54,12 +127,10 @@ footer {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin: 0 0 3em;
+    margin: 0 auto 3em auto;
 }
 
 #deck .card {
-    height: 125px;
-    width: 125px;
     background: #2e3d49;
     font-size: 0;
     color: #ffffff;
@@ -92,8 +163,9 @@ footer {
 
 .score-panel {
     text-align: left;
-    width: 420px;
-    margin-bottom: 10px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 10px auto;
 }
 
 .score-panel .stars {
