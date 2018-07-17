@@ -16,6 +16,18 @@ The game ends once all cards have been correctly matched.
 
 Live Demo on [Github Page](https://minhkhang1795.github.io/udacity-memory-game/)
 
+## Implemented functionalities
+* [x] Shuffle the cards when a match begins.
+* [x] The player can click on a card to flip it open.
+* [x] Two opened cards if matched will stay opened; otherwise, the cards are flipped face down.
+* [x] Show animations when opening or closing a card and when two cards are matched or unmatched.
+* [x] Timer on the top to show how much time the player has spent.
+* [x] Counter on the top to show how many times the player flips the cards.
+* [x] Star panel to show the player's performance. 
+* [x] Restart button allows the player to restart the game.
+* [x] When the player wins the game, the victory modal will pop up.
+* [x] The game will show a warning if the player tries to tamper with the back-end logic.
+
 ## Credits
 * Project Template:
     * https://github.com/udacity/fend-project-memory-game
