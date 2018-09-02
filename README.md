@@ -1,6 +1,6 @@
-# Memory Game Project
+# Matching Game Project
 
-Memory Game is the second project for Udacity Front-End Web Developer Nanodegree Program. 
+Matching Game is the second project for Udacity Front-End Web Developer Nanodegree Program. 
 
 ## How The Game Works
 The game board consists of sixteen "cards" arranged in a grid. The deck is made up of eight different pairs of cards, each with different symbols on one side. The cards are arranged randomly on the grid with the symbol face down. The gameplay rules are very simple: flip over two hidden cards at a time to locate the ones that match!
@@ -14,7 +14,7 @@ Each turn:
 
 The game ends once all cards have been correctly matched.
 
-Live Demo on [Github Page](https://minhkhang1795.github.io/udacity-memory-game/)
+Live Demo on [Github Page](https://minhkhang1795.github.io/udacity-matching-game/)
 
 ## Implemented functionalities
 * [x] Shuffle the cards when a match begins.
